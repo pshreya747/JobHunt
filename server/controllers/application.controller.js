@@ -82,8 +82,8 @@ export const getApplicants=async(req,res)=>{
             })
         };
         return res.status(200).json({
-            message:'Job not found.',
-            success:false
+           job,
+           success:true
         });
     } catch (error) {
         console.log(error);

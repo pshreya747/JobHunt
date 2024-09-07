@@ -8,53 +8,61 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import store from '@/redux/store'
+import { setLoading } from '@/redux/authSlice'
 
 
 const Signup = () => {
-    const [input,setInput]=useState({
-        fullname:"",
-        email:"",
-        phoneNumber:"",
-        password:"",
-        role:"",
-        file:""
-      });
-      const navigate = useNavigate();
-      const changeEventHandler = (e)=>{
-        setInput({...input, [e.target.name]:e.target.value});
-      }
-    
-      const changeFileHandler = (e)=>{
-        setInput({...input,file:e.target.files?.[0]});
-      }
+    const [input, setInput] = useState({
+        fullname: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        role: "",
+        file: ""
+    });
+    const {loading} = useSelector(store=>store.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const changeEventHandler = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value });
+    }
 
-      const submitHandler= async(e)=>{
+    const changeFileHandler = (e) => {
+        setInput({ ...input, file: e.target.files?.[0] });
+    }
+
+    const submitHandler = async (e) => {
         e.preventDefault();
-        const formData=new FormData();
-        formData.append("fullname",input.fullname);
-        formData.append("email",input.email);
-        formData.append("phoneNumber",input.phoneNumber);
-        formData.append("password",input.password);
-        formData.append("role",input.role);
-        if(input.file){
-            formData.append("file",input.file);
+        const formData = new FormData();
+        formData.append("fullname", input.fullname);
+        formData.append("email", input.email);
+        formData.append("phoneNumber", input.phoneNumber);
+        formData.append("password", input.password);
+        formData.append("role", input.role);
+        if (input.file) {
+            formData.append("file", input.file);
         }
         try {
-            const res= await axios.post(`${USER_API_END_POINT}/register`,formData,{
-                headers:{
-                    "Content-Type":"multipart/form-data"
+            dispatch(setLoading(true));
+            const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
                 },
-                withCredentials:true
+                withCredentials: true
             });
-            if(res.data.success){
+            if (res.data.success) {
                 navigate("/login");
-               toast.success(res.data.message); 
+                toast.success(res.data.message);
             }
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);
+        }finally{
+            dispatch(setLoading(false));
         }
-      }
+    }
     return (
         <div>
             <Navbar />
@@ -108,7 +116,7 @@ const Signup = () => {
                                     type="radio"
                                     name="role"
                                     value="student"
-                                    checked={input.role ==='student'}
+                                    checked={input.role === 'student'}
                                     onChange={changeEventHandler}
                                     className="cursor-pointer"
                                 />
@@ -119,7 +127,7 @@ const Signup = () => {
                                     type="radio"
                                     name="role"
                                     value="recruiter"
-                                    checked={input.role ==='recruiter'}
+                                    checked={input.role === 'recruiter'}
                                     onChange={changeEventHandler}
                                     className="cursor-pointer"
                                 />
@@ -137,7 +145,9 @@ const Signup = () => {
                             />
                         </div>
                     </div>
-                    <Button type="submit" className="w-full my-4">Signup</Button>
+                    {
+                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please Wait  </Button> : <Button type="submit" className="w-full my-4">Signup</Button>
+                    }
                     <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
                 </form>
             </div>

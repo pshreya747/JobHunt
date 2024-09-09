@@ -16,14 +16,14 @@ const AppliedJobTable = () => {
             </TableHeader>
             <TableBody>
                 {
-                    [1,2].map((item,index)=>{
+                    [1,2].map((item,index)=>(
                         <TableRow key={index}>
                             <TableCell>17-07-2024</TableCell>
                             <TableCell>Frontend Developer</TableCell>
                             <TableCell>Amazon</TableCell>
                             <TableCell className="text-right"><Badge>Selected</Badge></TableCell>
                         </TableRow>
-                    })
+                    ))
                 }
             </TableBody>
         </Table>

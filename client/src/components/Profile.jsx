@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { Badge, Contact, Mail, Pen } from 'lucide-react'
+import { Contact, Mail, Pen } from 'lucide-react'
 import { Label } from './ui/label'
 import AppliedJobTable from './AppliedJobTable'
+import { Badge } from './ui/badge'
+import UpdateProfileDialog from './UpdateProfileDialog '
+import { useSelector } from 'react-redux'
+import store from '@/redux/store'
+
+
 
 const skills=["Html","CSS","Javascript","ReactJs"]
+const isResume = true;
+
 const Profile = () => {
-    const isResume = true;
+    const [open, setOpen]= useState(false);
+    const {user}=useSelector(store=>store.auth);
+    
     return (
         <div>
             <Navbar />
@@ -19,27 +29,27 @@ const Profile = () => {
                             <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"></AvatarImage>
                         </Avatar>
                         <div>
-                            <h1 className='font-medium text-xl'>Full Name</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, tenetur.</p>
+                            <h1 className='font-medium text-xl'>{user?.fullname}</h1>
+                            <p>{user?.bio}</p>
                         </div>
                     </div>
-                    <Button className="text-right" variant="outline"><Pen /></Button>
-                </div>
+                    <Button  onClick={()=>{setOpen(true)}} className="text-right" variant="outline"><Pen /></Button>
+                </div> 
                 <div className='my-5'>
                     <div className='flex items-center gap-3 my-2'>
                         <Mail />
-                        <span>alexa@gmail.com</span>
+                        <span>{user?.email}</span>
                     </div>
                     <div className='flex items-center gap-3 my-2'>
                         <Contact />
-                        <span>8976547654</span>
+                        <span>{user?.phoneNumber}</span>
                     </div>
                 </div>
                 <div className='my-5'>
                     <h1>Skills</h1>
                     <div className='flex items-center gap-1'>
                     {
-                       skills.length===0 ? skills.map((item,index)=><Badge key={index}>{item}</Badge>) : <span>NA</span>
+                       user?.profile?.skills.length!=0 ? user?.profile?.skills.map((item,index)=>(<Badge key={index}>{item}</Badge>)): <span>NA</span>
                     }
                     </div>
                 </div>
@@ -53,6 +63,7 @@ const Profile = () => {
                     <h1 className='font-boldtext-lg my-5'>Applied Jobs</h1>
                     <AppliedJobTable/>
                 </div>
+                 <UpdateProfileDialog  open={open} setOpen={setOpen}/>
             </div>
         </div>
     )

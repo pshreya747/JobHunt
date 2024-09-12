@@ -17,7 +17,7 @@ const isResume = true;
 
 const Profile = () => {
     const [open, setOpen]= useState(false);
-    const {user}=useSelector(store=>store.auth);
+    const { user } = useSelector(store => store.auth); 
     
     return (
         <div>
@@ -56,7 +56,7 @@ const Profile = () => {
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
                     <Label className='text-md font-bold'>Resume</Label>
                     {
-                        isResume ? <a target='blank' href='https://youtube.com' className='text-blue-500 hover:underline cursor-pointer'> Resume file</a> : <span>NA</span>
+                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 hover:underline cursor-pointer'> {user?.profile?.resumeOriginalName}</a> : <span>NA</span>
                     }
                 </div>
                 <div className='max-w-4xl mx-auto bg-white  rounded-2xl'>

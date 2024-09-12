@@ -18,8 +18,8 @@ const UpdateProfileDialog = ({open, setOpen}) => {
         fullname:user?.fullname,
         email:user?.email,
         phoneNumber:user?.phoneNumber,
-        bio:user?.profile?.bio,
-        skills:user?.profile?.skills?.map(skill=>skill),
+        bio:user?.profile?.bio || '',
+        skills:user?.profile?.skills?.map(skill=>skill) || [],
         file:user?.profile?.resume
     });
 
@@ -45,19 +45,24 @@ const UpdateProfileDialog = ({open, setOpen}) => {
             formData.append("file",input.file);
         }
         try {
+            setLoading(true);
           const res = await axios.post(`${USER_API_END_POINT}/profile/update`,formData,{
             headers:{
                 'Content-Type':'multipart/form-data'
             },
             withCredentials:true
           });
-          if(res.data.success){
-           dispatch(setUser(res.data.user));
-            toast.success(res.data.message);
-          }
+
+          if (res.data.success) {
+                dispatch(setUser(res.data.user));  
+                toast.success(res.data.message);
+            }
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);
+        }
+        finally{
+            setLoading(false);
         }
         setOpen(false);
         console.log(input);
@@ -68,7 +73,7 @@ const UpdateProfileDialog = ({open, setOpen}) => {
 
         <div className=''>
             <Dialog  open={open} onOpenChange={setOpen} >
-                <DialogContent className='sm:max-w-[425px]' onInteractOutside={()=>setOpen(false)}>
+                <DialogContent description="" className='sm:max-w-[425px]' onInteractOutside={()=>setOpen(false)}>
                     <DialogHeader>
                         <DialogTitle>Update Profile</DialogTitle>
                         <form onSubmit={submitHandler} >

@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
 import jobSlice from "./jobSlice";
 import {
-    persistStore,
+    
     persistReducer,
     FLUSH,
     REHYDRATE,
@@ -12,8 +12,7 @@ import {
     REGISTER,
 } from 'redux-persist'
 import storage from "redux-persist/lib/storage";
-import { version } from "vite";
-import Job from "@/components/Job";
+
 
 const persistConfig={
     key:'root',

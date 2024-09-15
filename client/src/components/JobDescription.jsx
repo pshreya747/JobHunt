@@ -7,7 +7,7 @@ import { setSingleJob } from '@/redux/jobSlice';
 import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
-import { Rss } from 'lucide-react';
+
 
 const JobDescription = () => {
     const {singleJob}=useSelector(store=>store.job);

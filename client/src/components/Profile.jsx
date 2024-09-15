@@ -8,7 +8,7 @@ import AppliedJobTable from './AppliedJobTable'
 import { Badge } from './ui/badge'
 import UpdateProfileDialog from './UpdateProfileDialog '
 import { useSelector } from 'react-redux'
-import store from '@/redux/store'
+
 
 
 

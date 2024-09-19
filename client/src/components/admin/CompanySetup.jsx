@@ -50,7 +50,7 @@ const CompanySetup = () => {
             });
             if (res.data.success) {
                 toast.success(res.data.message);
-                navigate("admin/companies");
+                navigate("/admin/companies");
             }
         } catch (error) {
             console.log(error);
@@ -129,7 +129,7 @@ const CompanySetup = () => {
                         </div>
                     </div>
                     {
-                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please Wait  </Button> : <Button type="submit" className="w-full my-4">Update</Button>
+                        loading ? <Button onClick={()=>navigate("/admin/companies/create")} className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' />Please Wait  </Button> : <Button type="submit" className="w-full my-4">Update</Button>
                     }
                 </form>
             </div>

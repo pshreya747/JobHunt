@@ -30,7 +30,7 @@
 ## Installation
 ### To get started with the project, follow these steps:
 ### 1.Clone the repository
-### git clone <repository-url>
+### git clone repository_url
 ### cd JobHunt
 
 ### 2.Install server dependencies
@@ -46,8 +46,10 @@
 ## Usage
 ### To run the application, you need to start both the client and the server.
 ### 1.Client-Side Commands
-### Navigate to the client directory:cd client
-### Start the development server:npm run dev
+### Navigate to the client directory: 
+### cd client
+### Start the development server:
+### npm run dev
 
 ### 2.Server-Side Commands
 ### Open a new terminal window, navigate to the server directory:cd server

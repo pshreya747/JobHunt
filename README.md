@@ -30,7 +30,7 @@
 ## Installation
 ### To get started with the project, follow these steps:
 ### 1.Clone the repository
-### git clone repository_url
+### git clone https://github.com/pshreya747/JobHunt.git
 ### cd JobHunt
 
 ### 2.Install server dependencies
